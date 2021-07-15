@@ -10,6 +10,7 @@ Most of the plugins used in this experiment are 'official' and included in the j
 `jspsych-record-permission.js`, which was developed by Michael W. Weiss (https://github.com/m-w-w/custom-jspsych-plugins); and `jspsych-audio-elicitation.js`, which was built by me but owes a lot to Michael W. Weiss's `record-audio-JATOS.js` plugin and the `jspsych-html-audio-response.js` plugin (https://github.com/becky-gilbert/jsPsych/blob/audio-response/plugins/jspsych-html-audio-response.js) under development by the jsPsych team (Josh de Leeuw and Becky Gilbert). THIS PLUGIN IS NOT FULLY TESTED AND STILL UNDER DEVELOPMENT SO BE VERY CAREFUL IN USING IT.
 
 <h2>audio-elicitation.js</h2>
+
 This plugin has `stimulus` and `prompt` parameters, and a recording light that indicates whether the mic is recording audio (red, pulsing circle) or not (empty circle with a red outline). The recording light can be customized using the `recording_light` and `recording_light_off` parameters (note that the CSS for the current defaults is stored in `audio-elicitation.css`). 
 <p></p>
 
