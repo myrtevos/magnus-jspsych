@@ -18,3 +18,5 @@ Under the recording light are a Record button and a (disabled) Stop button. Once
 <p></p>
 
 The `timeout` parameter sets a time in milliseconds after which the media recorder times out and stops recording. Default is 30000 (30 seconds). The button labels can be set using the `record_`, `stop_`, `rerecord_`, and `upload_` `button_label` parameters.
+
+This plugin needs JQuery (.js file included in the elicitation folder), which is unfortunate and something I'm planning to resolve.
