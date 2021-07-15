@@ -1,0 +1,75 @@
+/* button styling */
+.record {
+    background-color: green;
+    font-size: 20px;
+    color: white;
+}
+
+.record:hover:enabled {
+    background-color: rgba(0, 128, 0, 0.308);
+    border-color: green;
+    color: black;
+}
+
+.stop {
+    background-color: red;
+    font-size: 20px;
+    color: white;
+}
+
+.stop:hover:enabled {
+    background-color: rgba(255, 0, 0, 0.432);
+    border-color: red;
+    color: black;
+}
+
+.upload {
+    background-color: orange;
+    font-size: 20px;
+    color: white;
+}
+
+.upload:hover:enabled {
+    background-color: rgba(255, 166, 0, 0.575);
+    border-color: orange;
+    color: black;
+}
+
+/* audio container styling */
+#jspsych-audio-elicitation-buttons {
+    display: inline-block;
+}
+
+/* recording light styling */
+recordinglight {
+	width: 50px;
+	height: 50px;
+	background-color: darkred;
+	border: 2px solid darkred;
+	border-radius: 50px;
+	margin: 40px auto;
+    display: block;
+}
+
+.notRec{
+	background-color: inherit;
+}
+
+.Rec{
+	animation-name: pulse;
+	animation-duration: 1.5s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+@keyframes pulse{
+	0%{
+		box-shadow: 0px 0px 5px 0px rgba(173,0,0,.3);
+	}
+	65%{
+		box-shadow: 0px 0px 5px 13px rgba(173,0,0,.3);
+	}
+	90%{
+		box-shadow: 0px 0px 5px 13px rgba(173,0,0,0);
+	}
+}
