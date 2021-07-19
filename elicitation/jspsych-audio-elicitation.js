@@ -1,7 +1,8 @@
 /*
  * jsPsych plugin to record audio as OGG, replay and rerecord it, and upload to JATOS
  * Paired with audio-elicitation.css
- * A hybrid of Michael W. Weiss' record-audio-JATOS plugin, and Becky Gilbert's html-audio-response plugin
+ * A hybrid of Michael W. Weiss' record-audio-JATOS plugin, and Becky Gilbert's html-audio-response plugin,
+ * cobbled together by Myrte Vos
  * Borrows code and concepts from https://www.twilio.com/blog/mediastream-recording-api
  * see also: www.jspsych.org (Joshua R. de Leeuw) and www.jatos.org (Lange, Kühn, & Filevich)
  */
@@ -14,7 +15,7 @@ jsPsych.plugins["audio-elicitation"] = (function () {
         name: "audio-elicitation",
         parameters: {
             stimulus: {
-                type: jsPsych.plugins.parameterType.HTML_STRING,
+                type: jsPsych.plugins.parameterType.HTML_STRING, //do we want this to be a STRING instead?
                 pretty_name: 'Stimulus',
                 default: undefined,
                 description: 'The string to be displayed'
@@ -91,16 +92,16 @@ jsPsych.plugins["audio-elicitation"] = (function () {
     plugin.trial = function (display_element, trial) {
 
         if (typeof trial.stimulus === 'undefined') {
-            console.error('Required parameter "stimulus" missing in html-audio-response');
+            console.error('Required parameter "stimulus" missing in audio-elicitation');
         }
 
         // set the width of the audio container to the width of the button div
         // yes, this is the only thing I'm using jquery for, fight me
-        $(display_element).ready(function() {
+        $(display_element).ready(function () {
             $("#response-audio").css({
-              'width': (($("#jspsych-audio-elicitation-buttons").width() - trial.margin_horizontal) + 'px')
+                'width': (($("#jspsych-audio-elicitation-buttons").width() - trial.margin_horizontal) + 'px')
             });
-          });
+        });
 
         // start of adding HTML...
         var html = "";
@@ -138,6 +139,22 @@ jsPsych.plugins["audio-elicitation"] = (function () {
         const light = document.querySelector('.recording-light-container');
         const uploadButton = document.querySelector('.upload');
 
+        // set timeout function
+        var timeout;
+
+        function starttimeout() {
+            timeout = setTimeout(function () {
+                mediaRecorder.stop();
+                console.log("recorder timed out");
+                stop.style.visibility = 'hidden';
+                stop.disabled = true;
+                light.innerHTML = trial.recording_light_off;
+                player.style.visibility = 'visible';
+                record.style.visibility = 'visible';
+                record.disabled = false;
+            }, trial.timeout);
+        };
+
         // if getUserMedia succeeds...
         let onSuccess = function (stream) {
 
@@ -147,7 +164,8 @@ jsPsych.plugins["audio-elicitation"] = (function () {
             record.onclick = function () {
                 mediaRecorder.start();
                 console.log(mediaRecorder.state);
-                console.log("recorder started");
+
+                starttimeout();
 
                 record.style.visibility = 'hidden';
                 uploadButton.style.visibility = 'hidden';
@@ -157,24 +175,14 @@ jsPsych.plugins["audio-elicitation"] = (function () {
 
                 stop.disabled = false;
                 record.disabled = true;
-
-                jsPsych.pluginAPI.setTimeout(function(){
-                    mediaRecorder.stop();
-                    console.log("recorder timed out");
-                    stop.style.visibility = 'hidden';
-                    stop.disabled = true;
-                    light.innerHTML = trial.recording_light_off;
-                    player.style.visibility = 'visible';
-                    record.style.visibility = 'visible';
-                    record.disabled = false;
-                }, 30000);
             }
 
             // listen for click to stop recording audio
             stop.onclick = function () {
                 mediaRecorder.stop();
                 console.log(mediaRecorder.state);
-                console.log("recorder stopped");
+
+                clearTimeout(timeout);
 
                 stop.style.visibility = 'hidden';
                 stop.disabled = true;
@@ -187,7 +195,7 @@ jsPsych.plugins["audio-elicitation"] = (function () {
                 uploadButton.disabled = false;
 
                 player.style.visibility = 'visible';
-                
+
                 light.innerHTML = trial.recording_light_off;
             }
 
@@ -206,10 +214,10 @@ jsPsych.plugins["audio-elicitation"] = (function () {
                     uploadButton.disabled = true;
                     if (trial.audio_filename === null) {
                         trial.audio_filename = String(Date.now());
-                      };
-                      var filename = trial.audio_filename + ".ogg";
-                      //var audio_data = { url: audioURL, str: filename };
-                      jatos.uploadResultFile(blob, filename).done(() => {
+                    };
+                    var filename = trial.audio_filename + ".ogg";
+                    //var audio_data = { url: audioURL, str: filename };
+                    jatos.uploadResultFile(blob, filename).done(() => {
                         console.info(filename + " uploaded");
                     });
 
