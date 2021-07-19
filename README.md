@@ -6,7 +6,8 @@ These are all the assets for the toy jsPsych experiment I built for/during the 1
 
 This experiment was developed to be run on JATOS (jatos.org), and tested on a local installation of JATOS. To replicate that workflow, see https://www.jatos.org/Installation.html#easy-installation-on-your-local-computer for a guide to getting your own local JATOS installation.
 
-Most of the plugins used in this experiment are 'official' and included in the jsPsych download package. There are two exceptions: 
+Most of the plugins used in this experiment are 'official' and included in the jsPsych download package. 
+There are two exceptions (see the 'elicitation' folder):
 `jspsych-record-permission.js`, which was developed by Michael W. Weiss (https://github.com/m-w-w/custom-jspsych-plugins); and `jspsych-audio-elicitation.js`, which was built by me but owes a lot to Michael W. Weiss's `record-audio-JATOS.js` plugin and the `jspsych-html-audio-response.js` plugin (https://github.com/becky-gilbert/jsPsych/blob/audio-response/plugins/jspsych-html-audio-response.js) under development by the jsPsych team (Josh de Leeuw and Becky Gilbert). THIS PLUGIN IS NOT FULLY TESTED AND STILL UNDER DEVELOPMENT SO BE VERY CAREFUL IN USING IT.
 
 <h2>audio-elicitation.js</h2>
